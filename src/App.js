@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./App.css";
+import Masonry from "react-masonry-css";
+import logo from "./img/logo.png";
 
 const UNSPLASH_KEY = "cHbiVyZigUPQ5PeVlahY90doCtXucdcjj5Oob3OwQ9c";
 const PEXELS_KEY = "gVcnpkFuk1q43nei90zzgh8OJPz69zj9URJxYRJgnECh6kwKmmmycp1D";
@@ -10,8 +13,9 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [selectedPhoto, setSelectedPhoto] = useState(null); // ✅ للصورة المكبرة
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
+  // Fetch photos from Unsplash and Pexels APIs
   const fetchPhotos = async () => {
     try {
       setLoading(true);
@@ -56,7 +60,7 @@ function App() {
         })),
       ];
 
-      setPhotos(combined);
+      setPhotos((prevPhotos) => [...prevPhotos, ...combined]); // append new photos to previous ones
     } catch (err) {
       console.error("Error fetching photos", err);
     } finally {
@@ -71,6 +75,7 @@ function App() {
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1);
+    setPhotos([]); // Clear photos before starting new search
     fetchPhotos();
   };
 
@@ -91,44 +96,30 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <h1>📸 Girls Gallery</h1>
+    <div className="container-fuild">
+      <header className="header">
+        <img src={logo} alt="Logo" className="logo" />
+        <h1>Girls Gallery</h1>
+      </header>
 
-      <form onSubmit={handleSearch} style={{ marginBottom: "20px" }}>
+      <form className="search-form" onSubmit={handleSearch}>
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
-          style={{
-            padding: "2px",
-            width: "200px",
-            marginRight: "10px",
-            borderRadius: "5px",
-          }}
         />
-        <button
-          type="submit"
-          style={{
-            padding: "4px 16px",
-            color: "white",
-            backgroundColor: "blue",
-            border: "none",
-            borderRadius: "5px",
-          }}
-        >
-          Search
-        </button>
+        <button type="submit">🔍 Search</button>
       </form>
 
       <select
+        className="category-select"
         value={category}
         onChange={(e) => {
           setCategory(e.target.value);
           setSearchTerm("");
           setPage(1);
         }}
-        style={{ padding: "8px", marginBottom: "20px" }}
       >
         <option value="girl">All</option>
         <option value="girl sexy">girl sexy</option>
@@ -137,79 +128,42 @@ function App() {
       </select>
 
       {loading ? (
-        <div style={{ marginTop: "40px" }}>
+        <div className="loader">
           <div className="spinner" />
           <p>Loading photos...</p>
         </div>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            justifyContent: "center",
-            gap: "20px",
-            marginTop: "20px",
+        <Masonry
+          breakpointCols={{
+            default: 4,
+            1100: 3,
+            700: 2,
+            500: 1,
           }}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
         >
-          {photos.map((photo) => (
-            <div key={photo.id}>
+          {photos.map((p, index) => (
+            <div key={index} className="photo-card">
               <img
-                src={photo.url}
-                alt="photo"
-                onClick={() => setSelectedPhoto(photo)} 
-                style={{
-                  width: "200px",
-                  height: "200px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  transition: "transform 0.3s",
-                }}
+                src={p.url}
+                alt={`Image ${index}`}
+                onClick={() => setSelectedPhoto(p)}
+                style={{ cursor: "pointer" }}
               />
             </div>
           ))}
-        </div>
+        </Masonry>
       )}
 
-      {/* نافذة منبثقة عند الضغط على صورة */}
       {selectedPhoto && (
-        <div
-          onClick={() => setSelectedPhoto(null)}
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.8)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: 9999,
-            flexDirection: "column",
-            padding: "20px",
-          }}
-        >
-          <img
-            src={selectedPhoto.download}
-            alt="full"
-            style={{
-              maxWidth: "90%",
-              maxHeight: "80%",
-              borderRadius: "10px",
-              boxShadow: "0 0 20px #000",
-            }}
-          />
-          <div style={{ marginTop: "20px" }}>
+        <div className="modal" onClick={() => setSelectedPhoto(null)}>
+          <img src={selectedPhoto.download} alt="full" />
+          <div className="modal-buttons">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 handleDownload(selectedPhoto.download, selectedPhoto.id);
-              }}
-              style={{
-                padding: "10px 20px",
-                marginRight: "10px",
-                fontSize: "16px",
               }}
             >
               ⬇️ Download
@@ -219,12 +173,7 @@ function App() {
                 e.stopPropagation();
                 setSelectedPhoto(null);
               }}
-              style={{
-                padding: "10px 20px",
-                fontSize: "16px",
-                backgroundColor: "red",
-                color: "white",
-              }}
+              className="close-btn"
             >
               ❌ Close
             </button>
@@ -232,42 +181,23 @@ function App() {
         </div>
       )}
 
-      {/* Pagination */}
-      <div style={{ marginTop: "30px" }}>
+      <div className="pagination">
         <button
-          onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
           disabled={page === 1}
-          style={{ padding: "10px 20px", marginRight: "10px" }}
         >
-          ⬅ Previous
+          ⬅
         </button>
         <span>Page {page}</span>
         <button
-          onClick={() => setPage((prev) => prev + 1)}
-          style={{ padding: "10px 20px", marginLeft: "10px" }}
+          onClick={() => {
+            setPage((p) => p + 1);
+            fetchPhotos(); // Fetch new photos when clicking load more
+          }}
         >
-          Next ➡
+          Load More ➡
         </button>
       </div>
-
-      {/* Loader CSS */}
-      <style>
-        {`
-        .spinner {
-          margin: 0 auto;
-          width: 50px;
-          height: 50px;
-          border: 5px solid #ccc;
-          border-top-color: #2196f3;
-          border-radius: 50%;
-          animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-          to { transform: rotate(360deg); }
-        }
-      `}
-      </style>
     </div>
   );
 }
