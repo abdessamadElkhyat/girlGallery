@@ -15,24 +15,20 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // Fetch photos from Unsplash and Pexels APIs
   const fetchPhotos = async () => {
     try {
       setLoading(true);
 
-      const unsplashRes = await axios.get(
-        "https://api.unsplash.com/search/photos",
-        {
-          params: {
-            query: searchTerm || category,
-            per_page: 10,
-            page,
-          },
-          headers: {
-            Authorization: `Client-ID ${UNSPLASH_KEY}`,
-          },
-        }
-      );
+      const unsplashRes = await axios.get("https://api.unsplash.com/search/photos", {
+        params: {
+          query: searchTerm || category,
+          per_page: 10,
+          page,
+        },
+        headers: {
+          Authorization: `Client-ID ${UNSPLASH_KEY}`,
+        },
+      });
 
       const pexelsRes = await axios.get("https://api.pexels.com/v1/search", {
         params: {
@@ -60,7 +56,7 @@ function App() {
         })),
       ];
 
-      setPhotos((prevPhotos) => [...prevPhotos, ...combined]); // append new photos to previous ones
+      setPhotos(combined);
     } catch (err) {
       console.error("Error fetching photos", err);
     } finally {
@@ -75,7 +71,6 @@ function App() {
   const handleSearch = (e) => {
     e.preventDefault();
     setPage(1);
-    setPhotos([]); // Clear photos before starting new search
     fetchPhotos();
   };
 
@@ -96,7 +91,7 @@ function App() {
   };
 
   return (
-    <div className="container-fuild">
+    <div className="container-fluid">
       <header className="header">
         <img src={logo} alt="Logo" className="logo" />
         <h1>Girls Gallery</h1>
@@ -122,15 +117,19 @@ function App() {
         }}
       >
         <option value="girl">All</option>
-        <option value="girl sexy">girl sexy</option>
-        <option value="muslim girl sexy">Hijabi sexy</option>
-        <option value="girl in underwear">girl 🩱</option>
+        <option value="girl sexy">Girl Sexy</option>
+        <option value="muslim girl sexy">Hijabi Sexy</option>
+        <option value="girl in underwear">Girl 🩱</option>
       </select>
 
       {loading ? (
         <div className="loader">
           <div className="spinner" />
           <p>Loading photos...</p>
+        </div>
+      ) : photos.length === 0 ? (
+        <div className="no-photos-found">
+          <p>No photos found. Try another search.</p>
         </div>
       ) : (
         <Masonry
@@ -145,12 +144,17 @@ function App() {
         >
           {photos.map((p, index) => (
             <div key={index} className="photo-card">
-              <img
-                src={p.url}
-                alt={`Image ${index}`}
-                onClick={() => setSelectedPhoto(p)}
-                style={{ cursor: "pointer" }}
-              />
+              <a
+                href={p.download}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedPhoto(p);
+                }}
+              >
+                <img src={p.url} alt={`Image ${index}`} />
+              </a>
             </div>
           ))}
         </Masonry>
@@ -189,14 +193,7 @@ function App() {
           ⬅
         </button>
         <span>Page {page}</span>
-        <button
-          onClick={() => {
-            setPage((p) => p + 1);
-            fetchPhotos(); // Fetch new photos when clicking load more
-          }}
-        >
-          Load More ➡
-        </button>
+        <button onClick={() => setPage((p) => p + 1)}>➡</button>
       </div>
     </div>
   );

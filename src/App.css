@@ -71,6 +71,13 @@ body {
   color: white;
 }
 
+.no-photos-found {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #888;
+}
+
+
 
 .my-masonry-grid {
   display: flex;
