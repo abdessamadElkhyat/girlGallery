@@ -112,7 +112,7 @@ function App() {
           style={{
             padding: "4px 16px",
             color: "white",
-            backgroundColor: "blue",
+            backgroundColor: "green",
             border: "none",
             borderRadius: "5px",
           }}
@@ -156,7 +156,7 @@ function App() {
               <img
                 src={photo.url}
                 alt="photo"
-                onClick={() => setSelectedPhoto(photo)} // 👈 عند الضغط تفتح الصورة
+                onClick={() => setSelectedPhoto(photo)} 
                 style={{
                   width: "200px",
                   height: "200px",
