@@ -6,7 +6,7 @@ const PEXELS_KEY = "gVcnpkFuk1q43nei90zzgh8OJPz69zj9URJxYRJgnECh6kwKmmmycp1D";
 
 function App() {
   const [photos, setPhotos] = useState([]);
-  const [category, setCategory] = useState("girl");
+  const [category, setCategory] = useState("girl sexy");
   const [searchTerm, setSearchTerm] = useState("");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -16,16 +16,19 @@ function App() {
     try {
       setLoading(true);
 
-      const unsplashRes = await axios.get("https://api.unsplash.com/search/photos", {
-        params: {
-          query: searchTerm || category,
-          per_page: 10,
-          page,
-        },
-        headers: {
-          Authorization: `Client-ID ${UNSPLASH_KEY}`,
-        },
-      });
+      const unsplashRes = await axios.get(
+        "https://api.unsplash.com/search/photos",
+        {
+          params: {
+            query: searchTerm || category,
+            per_page: 10,
+            page,
+          },
+          headers: {
+            Authorization: `Client-ID ${UNSPLASH_KEY}`,
+          },
+        }
+      );
 
       const pexelsRes = await axios.get("https://api.pexels.com/v1/search", {
         params: {
@@ -97,9 +100,23 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search..."
-          style={{ padding: "8px", width: "200px", marginRight: "10px" }}
+          style={{
+            padding: "2px",
+            width: "200px",
+            marginRight: "10px",
+            borderRadius: "5px",
+          }}
         />
-        <button type="submit" style={{ padding: "8px 16px" }}>
+        <button
+          type="submit"
+          style={{
+            padding: "4px 16px",
+            color: "white",
+            backgroundColor: "blue",
+            border: "none",
+            borderRadius: "5px",
+          }}
+        >
           Search
         </button>
       </form>
