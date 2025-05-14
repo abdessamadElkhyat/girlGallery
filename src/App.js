@@ -19,16 +19,19 @@ function App() {
     try {
       setLoading(true);
 
-      const unsplashRes = await axios.get("https://api.unsplash.com/search/photos", {
-        params: {
-          query: searchTerm || category,
-          per_page: 10,
-          page,
-        },
-        headers: {
-          Authorization: `Client-ID ${UNSPLASH_KEY}`,
-        },
-      });
+      const unsplashRes = await axios.get(
+        "https://api.unsplash.com/search/photos",
+        {
+          params: {
+            query: searchTerm || category,
+            per_page: 10,
+            page,
+          },
+          headers: {
+            Authorization: `Client-ID ${UNSPLASH_KEY}`,
+          },
+        }
+      );
 
       const pexelsRes = await axios.get("https://api.pexels.com/v1/search", {
         params: {
@@ -91,99 +94,109 @@ function App() {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fuild">
       <header className="header">
         <img src={logo} alt="Logo" className="logo" />
-        <h1>Girls Gallery</h1>
+        <h1>Gallery</h1>
       </header>
 
-      <form className="search-form" onSubmit={handleSearch}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search..."
-        />
-        <button type="submit">🔍 Search</button>
-      </form>
-
-      <select
-        className="category-select"
-        value={category}
-        onChange={(e) => {
-          setCategory(e.target.value);
-          setSearchTerm("");
-          setPage(1);
-        }}
-      >
-        <option value="girl">All</option>
-        <option value="girl sexy">Girl Sexy</option>
-        <option value="muslim girl sexy">Hijabi Sexy</option>
-        <option value="girl in underwear">Girl 🩱</option>
-      </select>
-
-      {loading ? (
-        <div className="loader">
-          <div className="spinner" />
-          <p>Loading photos...</p>
+      <section className="section1">
+        <div className="description">
+          <p>
+            Les plus belles photos, images libres de droits partagées
+            gratuitement par des créateurs talentueux.
+          </p>
         </div>
-      ) : photos.length === 0 ? (
-        <div className="no-photos-found">
-          <p>No photos found. Try another search.</p>
-        </div>
-      ) : (
-        <Masonry
-          breakpointCols={{
-            default: 4,
-            1100: 3,
-            700: 2,
-            500: 1,
+
+        <form className="search-form" onSubmit={handleSearch}>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search..."
+          />
+          <button type="submit">🔍search</button>
+        </form>
+
+        <select
+          className="category-select"
+          value={category}
+          onChange={(e) => {
+            setCategory(e.target.value);
+            setSearchTerm("");
+            setPage(1);
           }}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
         >
-          {photos.map((p, index) => (
-            <div key={index} className="photo-card">
-              <a
-                href={p.download}
-                target="_blank"
-                rel="noopener noreferrer"
+          <option value="girl">All</option>
+          <option value="girl sexy">Girls </option>
+          <option value="girl in underwear">Girl 🩱</option>
+        </select>
+      </section>
+
+      <div>
+        {loading ? (
+          <div className="loader">
+            <div className="spinner" />
+            <p>Loading photos...</p>
+          </div>
+        ) : photos.length === 0 ? (
+          <div className="no-photos-found">
+            <p>No photos found. Try another search.</p>
+          </div>
+        ) : (
+          <Masonry
+            breakpointCols={{
+              default: 4,
+              1100: 3,
+              700: 2,
+              500: 1,
+            }}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {photos.map((p, index) => (
+              <div key={index} className="photo-card">
+                <a
+                  href={p.download}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPhoto(p);
+                  }}
+                >
+                  <img src={p.url} alt={`Image ${index}`} />
+                </a>
+              </div>
+            ))}
+          </Masonry>
+        )}
+
+        {selectedPhoto && (
+          <div className="modal" onClick={() => setSelectedPhoto(null)}>
+            <img src={selectedPhoto.download} alt="full" />
+            <div className="modal-buttons">
+              <button
                 onClick={(e) => {
-                  e.preventDefault();
-                  setSelectedPhoto(p);
+                  e.stopPropagation();
+                  handleDownload(selectedPhoto.download, selectedPhoto.id);
                 }}
               >
-                <img src={p.url} alt={`Image ${index}`} />
-              </a>
+                ⬇️ Download
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedPhoto(null);
+                }}
+                className="close-btn"
+              >
+                ❌ Close
+              </button>
             </div>
-          ))}
-        </Masonry>
-      )}
-
-      {selectedPhoto && (
-        <div className="modal" onClick={() => setSelectedPhoto(null)}>
-          <img src={selectedPhoto.download} alt="full" />
-          <div className="modal-buttons">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleDownload(selectedPhoto.download, selectedPhoto.id);
-              }}
-            >
-              ⬇️ Download
-            </button>
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedPhoto(null);
-              }}
-              className="close-btn"
-            >
-              ❌ Close
-            </button>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="pagination">
         <button
