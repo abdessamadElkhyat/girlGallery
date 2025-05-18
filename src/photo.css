@@ -1,0 +1,214 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  color: #212529;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.logo {
+  width: 50px;
+  margin-right: 10px;
+}
+
+h1 {
+  margin: auto;
+}
+
+.section1{
+  background-color: #f5f9ff;
+  height: 60vh;
+  margin-bottom: 10px;
+}
+
+.description {
+  text-align: center;
+  margin: auto;
+  max-width: 900px;
+  font-size: 1.6rem;
+  color: #000000;
+  line-height: 1.6;
+  padding-top: 60px;
+  font-family: initial;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.search-form input {
+  padding: 5px 15px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-form button {
+  padding: 5px 15px;
+  background-color: #05a081;
+  border: none;
+  color: white;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-form button:hover {
+  background-color: #04836a;
+}
+
+
+.category-select {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.contenu {
+  padding: 20px;
+}
+
+.my-masonry-grid {
+  display: flex;
+  margin-left: -20px;
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 20px;
+  background-clip: padding-box;
+}
+
+.photo-card {
+  margin-bottom: 20px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background-color: white;
+  transition: transform 0.3s;
+}
+
+.photo-card:hover {
+  transform: scale(1.02);
+}
+
+.photo-card img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+}
+
+.loader {
+  text-align: center;
+  padding: 50px;
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #007bff;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.no-photos-found {
+  text-align: center;
+  padding: 30px;
+  font-size: 18px;
+  color: #888;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 80%;
+  border-radius: 10px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+.modal-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.modal-buttons .close-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+.pagination button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
