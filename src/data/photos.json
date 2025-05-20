@@ -3,48 +3,56 @@
     "id": 1,
     "src": "../assets/girlsexy1.jpg",
     "title": "Coucher du soleil",
-    "description": "Une vue magnifique au coucher du soleil."
+    "description": "Une vue magnifique au coucher du soleil.",
+    "category": "nature"
   },
   {
     "id": 2,
     "src": "../assets/woman-sexy.jpg",
     "title": "Coucher du soleil",
-    "description": "Portrait naturel d'une femme inspirante."
+    "description": "Portrait naturel d'une femme inspirante.",
+    "category": "portrait"
   },
   {
     "id": 3,
     "src": "../assets/girl_sexy_arabic2.jpg",
     "title": "Coucher du soleil",
-    "description": "Beauté et lumière naturelle."
+    "description": "Beauté et lumière naturelle.",
+    "category": "portrait"
   },
   {
     "id": 4,
     "src": "../assets/girlsexy1.jpg",
     "title": "Coucher du soleil",
-    "description": "Scène romantique et apaisante."
+    "description": "Scène romantique et apaisante.",
+    "category": "nature"
   },
   {
     "id": 5,
     "src": "../assets/woman-sexy.jpg",
     "title": "Coucher du soleil",
-    "description": "Charme naturel capturé en lumière douce."
+    "description": "Charme naturel capturé en lumière douce.",
+    "category": "portrait"
   },
   {
     "id": 6,
     "src": "../assets/girl_sexy_arabic2.jpg",
     "title": "Coucher du soleil",
-    "description": "Simplicité et élégance."
+    "description": "Simplicité et élégance.",
+    "category": "portrait"
   },
   {
     "id": 7,
     "src": "../assets/girlsexy1.jpg",
     "title": "Coucher du soleil",
-    "description": "Féminité et force."
+    "description": "Féminité et force.",
+    "category": "nature"
   },
   {
     "id": 8,
     "src": "../assets/woman-sexy.jpg",
     "title": "Coucher du soleil",
-    "description": "Beauté authentique."
+    "description": "Beauté authentique.",
+    "category": "portrait"
   }
 ]
