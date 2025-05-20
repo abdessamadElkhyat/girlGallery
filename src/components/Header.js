@@ -1,18 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./Header.css";
 
+const Header = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-const Header = () => (
-  <header className="header">
-    <img src="../assets/logo.png" alt="Logo" className="logo" />
+  const toggleMenu = () => {
+    setMenuOpen((prev) => !prev);
+  };
 
-    <h1 className="header-title">Gallery</h1>
+  return (
+    <header className="header">
+      <div className="header-left">
+        <img src="/assets/logo.png" alt="Logo" className="logo" />
+        <h1 className="header-title">Gallery</h1>
+      </div>
 
-    <nav className="nav-links">
-      <Link to="/">Home</Link>
-      <Link to="/photos">Photos</Link>
-    </nav>
-  </header>
-);
+      <div className={`nav-toggle ${menuOpen ? "open" : ""}`} onClick={toggleMenu}>
+        <span />
+        <span />
+        <span />
+      </div>
+
+      <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
+        <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+        <Link to="/photos" onClick={() => setMenuOpen(false)}>Photos</Link>
+        <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+        <Link to="/photo-special" onClick={() => setMenuOpen(false)}>Photo Special</Link>
+      </nav>
+    </header>
+  );
+};
 
 export default Header;
