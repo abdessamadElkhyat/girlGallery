@@ -4,7 +4,7 @@ import Masonry from "react-masonry-css";
 import Header from "../components/Header";
 
 const UNSPLASH_KEY = "cHbiVyZigUPQ5PeVlahY90doCtXucdcjj5Oob3OwQ9c";
-const PEXELS_KEY = "gVcnpkFuk1q43nei90zzgh8OJPz69zj9URJxYRJgnECh6kwKmmmycp1P";
+const PEXELS_KEY = "gVcnpkFuk1q43nei90zzgh8OJPz69zj9URJxYRJgnECh6kwKmmmycp1D";
 
 const Photos = () => {
   const [photos, setPhotos] = useState([]);
