@@ -24,13 +24,14 @@
 
 .home-hero {
   position: relative;
-  height: 100vh;
+  height:100vh;
+  width: 100%;
   overflow: hidden;
+
 }
 
 .hero-img {
-max-width: 100%;
-height: auto;
+  width: 100%;
   object-fit: cover;
   display: block;
 }
@@ -40,7 +41,7 @@ height: auto;
   top: 50%;
   left: 5%;
   transform: translateY(-50%);
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   max-width: 600px;
   z-index: 2;
   padding: 1.5rem;
@@ -74,6 +75,7 @@ height: auto;
     transform: translate(-50%, -50%);
     text-align: center;
     max-width: 100%;
+    color: black;
   }
 
   .hero-text h1 {

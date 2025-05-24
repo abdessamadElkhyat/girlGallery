@@ -20,7 +20,7 @@ const Home = () => {
 
       <div className="home-hero">
         <img
-          src="assets/portrait-young-beautiful-sexy-woman-model-summer.jpg"
+          src="assets/hero.jpg"
           alt="Beautiful girl"
           className="hero-img"
         />
